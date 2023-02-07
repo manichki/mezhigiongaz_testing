@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Title{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+<h1 class="display-4">{{card.text}}</h1>
+</div>
+
+<div class="row justify-content-center">
+<form action="{% url 'startQuiz' %}" method='POST'>
+  {% csrf_token %}
+  {% for answer in card.answer_set.all %}
+  <p>{{answer.text}}  <input class="checkbox" type="checkbox" name="{{answer.pk}}"></p>
+  {% endfor %}
+  <input type="hidden" value="{{card_id}}" name="card_id"/>
+  <button type="submit" class=".btn btn-outline-secondary text-light bg-success">Дальше</button>
+</form>
+</div>
+
+{% endblock %}

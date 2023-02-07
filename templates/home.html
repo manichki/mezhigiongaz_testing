@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Домашняя страница{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+  <div class="float-right">
+    Добро пожаловать, {{ user.username }}!
+    <a href="{% url 'logout' %}">Выйти</a>
+  </div>
+  <br>
+  {% if card_set_list %}
+    <ul class="list-group">
+      {% for card_set in card_set_list %}
+      <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+        <a href="{% url 'cardset' card_set.pk %}">{{card_set.name}}</a>
+        <span class="badge badge-primary badge-pill">{{card_set.card.count}}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No quizzes still...</p>
+  {% endif %}
+{% else %}
+  <p>Вы не зашли...</p>
+  <a href="{% url 'login' %}">Войти</a>
+{% endif %}
+{% endblock %}
